@@ -7,6 +7,7 @@
     owner: "{{ngrok_user | d('root')}}"
     mode: 744
   when: ansible_architecture == "x86_64"
+  register: ngrok__register_app_override
 - name: copy ngrokd arm executable (arm)
   copy:
     src: "{{ngrokd_arm_local_exec_path}}"
@@ -14,11 +15,22 @@
     owner: "{{ngrok_user | d('root')}}"
     mode: 744
   when: ansible_architecture == "armv7l"
+  register: ngrok__register_app_override
 - name: copy ngrokd service template
   template:
     src: etc/systemd/system/ngrokd.service.j2
     dest: /etc/systemd/system/ngrokd.service
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  register: ngrok__register_custom_override
+- name: Reload systemd daemon
+  systemd:
+    daemon_reload: true
+  when: ngrok__register_custom_override is changed
 - name: start ngrokd service
   service:
     name: ngrokd
     state: reloaded
+  when: ngrok__register_custom_override is changed
+        or ngrok__register_app_override is changed

@@ -7,6 +7,9 @@
 #pre start script, empty by default
 ngrok_exec_start_pre: ""
 
+#force reload of ngrok service
+ngrok__force_reload: no
+
 #location of ngrok/ngrokd in host
 ngrok_arm_local_exec_path: "files/linux_arm/ngrok"
 ngrokd_arm_local_exec_path: "files/linux_arm/ngrokd"
