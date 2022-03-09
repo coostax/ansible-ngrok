@@ -10,4 +10,6 @@
     proto: tcp
     from: "{{ngrok_allowed_ips}}"
   loop: "{{ngrok_tunnels}}"
-  when: item.remote_port && ufw_status.stat.exists
+  when: 
+    - "'remote_port' in item"
+    - ufw_status.stat.exists

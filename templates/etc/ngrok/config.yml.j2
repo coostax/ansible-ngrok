@@ -1,8 +1,9 @@
 server_addr: {{ngrok_server_addr}}:{{ngrok_server_port}}
+trust_host_root_certs: {{ngork_trust_host_root_certs}}
 tunnels:
 {% for tunnel in ngrok_tunnels %}
   {{tunnel.name}}:
-    {{'remote_port: ' ~ tunnel.remote_port if tunnel.remote_port }}
+    {{'remote_port: ' ~ tunnel.remote_port if 'remote_port' in tunnel else ''}}
     proto:
       {{tunnel.protocol | d('http')}}: {{tunnel.port}}
 {% endfor %}

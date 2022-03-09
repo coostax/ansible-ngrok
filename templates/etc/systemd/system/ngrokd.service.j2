@@ -3,7 +3,7 @@ Description=ngrokd - ngrok server
 After=network.target
 
 [Service]
-ExecStart={{ngrokd_exec_path}} -log {{ngrokd_log_path}} -domain {{ngrok_server_addr}}
+ExecStart={{ngrokd_exec_path}} -log {{ngrokd_log_path}} -tlsKey="{{ngrokd_tls_key}}" -tlsCrt="{{ngrokd_tls_crt}}" -domain {{ngrok_server_addr}}
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 IgnoreSIGPIPE=true
