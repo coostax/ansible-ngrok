@@ -1,0 +1,17 @@
+[Unit]
+Description=ngrok-client
+After=network.target dnsmasq.target
+
+[Service]
+{{'ExecStartPre=' ~ ngrok_exec_start_pre if ngrok_exec_start_pre else ''}}
+ExecStart={{ngrok_exec_path}} --log {{ngrok_log_path}} --config {{ngrok_config_dir}}/config.yml start {% for tunnel in ngrok_tunnels %}{{tunnel.name}} {% endfor %}
+
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+IgnoreSIGPIPE=true
+Restart=always
+RestartSec=3
+Type=simple
+
+[Install]
+WantedBy=multi-user.target

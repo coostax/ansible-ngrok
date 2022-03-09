@@ -1,0 +1,13 @@
+#open firewall ports if required and if ufw exists
+- name: Check if ufw exists
+  stat: path=/etc/init.d/ufw
+  register: ufw_status
+
+- name: Open remote ports for ngrok
+  ufw:
+    rule: allow
+    port: "{{item.remote_port}}"
+    proto: tcp
+    from: "{{ngrok_allowed_ips}}"
+  loop: "{{ngrok_tunnels}}"
+  when: item.remote_port && ufw_status.stat.exists

@@ -1,0 +1,24 @@
+---
+#setup ngrok server
+- name: copy ngrokd executable (x86)
+  copy:
+    src: "files/ngrokd"
+    dest: "{{ngrokd_exec_path}}"
+    owner: "{{ngrok_user | d('root')}}"
+    mode: 744
+  when: ansible_architecture == "x86_64"
+- name: copy ngrokd arm executable (arm)
+  copy:
+    src: "{{ngrokd_arm_local_exec_path}}"
+    dest: "{{ngrokd_exec_path}}"
+    owner: "{{ngrok_user | d('root')}}"
+    mode: 744
+  when: ansible_architecture == "armv7l"
+- name: copy ngrokd service template
+  template:
+    src: etc/systemd/system/ngrokd.service.j2
+    dest: /etc/systemd/system/ngrokd.service
+- name: start ngrokd service
+  service:
+    name: ngrokd
+    state: reloaded

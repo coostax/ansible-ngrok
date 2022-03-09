@@ -1,0 +1,13 @@
+---
+- name: configure server
+  import_tasks: server.yml
+  become: true
+  when: ngrok_server | d(false)
+  tags:
+    - ngrokd
+- name: configure client
+  import_tasks: client.yml
+  become: true
+  when: ngrok_client | d(false)
+  tags:
+    - ngrok

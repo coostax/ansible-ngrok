@@ -1,0 +1,8 @@
+server_addr: {{ngrok_server_addr}}:{{ngrok_server_port}}
+tunnels:
+{% for tunnel in ngrok_tunnels %}
+  {{tunnel.name}}:
+    {{'remote_port: ' ~ tunnel.remote_port if tunnel.remote_port }}
+    proto:
+      {{tunnel.protocol | d('http')}}: {{tunnel.port}}
+{% endfor %}

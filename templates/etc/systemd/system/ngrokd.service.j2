@@ -1,0 +1,15 @@
+[Unit]
+Description=ngrokd - ngrok server
+After=network.target
+
+[Service]
+ExecStart={{ngrokd_exec_path}} -log {{ngrokd_log_path}} -domain {{ngrok_server_addr}}
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+IgnoreSIGPIPE=true
+Restart=always
+RestartSec=3
+Type=simple
+
+[Install]
+WantedBy=multi-user.target

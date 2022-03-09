@@ -1,0 +1,18 @@
+---
+    - hosts: 127.0.0.1
+      vars:
+        ngrok_exec_path: "/opt/ngrok"
+        ngrok_log_path: "/var/log/ngrok.log"
+        ngrok_config_dir: "/etc/ngrok"
+        ngrok_server_addr: "ngrok.me"
+        ngrok_server_port: "4443"
+        ngrok_tunnels:
+          - name: test
+            port: 8080
+            protocol: http
+          - name: test1
+            port: 8080
+            protocol: http
+      tasks:
+      - name: Test jinja2template
+        template: src=../templates/etc/systemd/system/ngrok.service.j2 dest=test.service

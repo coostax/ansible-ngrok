@@ -1,0 +1,29 @@
+---
+
+#set one of these to true|yes to select client/server config
+#ngrok_client: no
+#ngrok_server: no
+
+#pre start script, empty by default
+ngrok_exec_start_pre: ""
+
+#location of ngrok/ngrokd in host
+ngrok_arm_local_exec_path: "files/linux_arm/ngrok"
+ngrokd_arm_local_exec_path: "files/linux_arm/ngrokd"
+
+ngrok_exec_path: "/opt/ngrok"
+ngrok_log_path: "/var/log/ngrok.log"
+ngrok_config_dir: "/etc/ngrok"
+
+ngrok_server_addr: "ngrok.me"
+ngrok_server_port: "4443"
+
+ngrok_tunnels:
+    - name: test
+      port: 8080
+      protocol: http
+
+ngrok_allowed_ips: "0.0.0.0/0"
+
+ngrokd_exec_path: "/opt/ngrokd"
+ngrokd_log_path: "/var/log/ngrokd.log"
